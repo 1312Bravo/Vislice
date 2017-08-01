@@ -1,4 +1,7 @@
 import random
+import tkinter as tk
+
+
 
 class Igra():
 
@@ -50,8 +53,9 @@ class Igra():
         print(" \n")
     def izberi_besedo(self):
         dolzina = input("Besedo kaksne težavnosti bos probal uganiti? (lahko, srednje-tezko, tezko, zelo-tezko) ")
-        beseda = random.choice(self.slovar[dolzina])
-        return beseda
+        random_beseda = random.choice(self.slovar[dolzina])
+        self.beseda = random_beseda
+        return random_beseda
 
     def porocaj_o_stevilu_crk(self):
         stevilo_crtic = len(self.beseda)
@@ -71,12 +75,13 @@ class Igra():
             return False
         else: 
             self.ze_ugibano += ugibana_crka
+            print(ugibana_crka)
             if ugibana_crka in self.beseda:
                 print(" Bravo, pravilno si uganil, crka {}, se res skriva v iskani besedi. ".format(ugibana_crka))
                 return True
             else:
                 self.stevilo_napak += 1
-                print(" Napačno ugibaš, poskusi se enkrat! ")
+                print(" Napačno ugibas, poskusi se enkrat! ")
                 return False
 
     def ali_je_konec_igre(self):
@@ -89,10 +94,47 @@ class Igra():
 
         return True
 
-        
+nova_igra = Igra()
+nova_igra.pripravi_slovar()
+beseda = nova_igra.izberi_besedo()
+okno = tk.Tk()
+okvir = tk.Frame(okno)
 
+okno.title('Vislice')
+
+vislice = tk.Label(okno, text='Obesi se.')
+vislice.grid(row=1, sticky="w,e,n,s")
+
+stevec=0
+seznam_crk = []
+
+for crka in beseda:
+    vislice = tk.Label(okno, text='_')
+    vislice.grid(row=0, column=2+stevec)
+    seznam_crk.append(vislice)
+    stevec += 1
+    
+
+vnosno_polje = tk.Entry(okno)
+vnosno_polje.grid(row=2, column=0)
+
+def vnos():
+    ugibana_crka = vnosno_polje.get()
+    nova_igra.ali_je_ugib_pravilen(ugibana_crka)
+    seznam_crk[0].config(text=ugibana_crka)
+    return ugibana_crka
+    
+gumb_ugibaj = tk.Button(okno, text = 'Ugibaj!', command=vnos)
+gumb_izhod = tk.Button(okno, text = 'Izhod!', command=quit)
+
+gumb_ugibaj.grid(row=2, column=1)
+gumb_izhod.grid(row=3, column=1)
+
+
+okno.mainloop()
 i = Igra()
 i.igraj()
+
 
 
 
