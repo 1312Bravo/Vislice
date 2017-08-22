@@ -45,11 +45,16 @@ class Igra():
             print("Bravo, uganil si besedo! Napacno si ugibal le: {}-krat".format(self.stevilo_napak))
             
     def porocaj(self):
+        st_element = 0
         for x in self.beseda:
             if x in self.ze_ugibano:
+                seznam_crk[st_element].config(text=x)  # spremeni seznam crk
                 print(x, end = " ")
+                st_element += 1
             else:
+                seznam_crk[st_element].config(text="_")  # pusti seznam crk
                 print("_", end = " ")
+                st_element += 1
         print(" \n")
     def izberi_besedo(self):
         dolzina = input("Besedo kaksne težavnosti bos probal uganiti? (lahko, srednje-tezko, tezko, zelo-tezko) ")
@@ -71,16 +76,19 @@ class Igra():
     def ali_je_ugib_pravilen(self, ugibana_crka):
         if ugibana_crka in self.ze_ugibano:
             self.stevilo_napak += 1
+            izpis.config(text="To crko si enkrat ze ugibal, zresni se!")
             print("To crko si enkrat ze ugibal, zresni se!")
             return False
         else: 
             self.ze_ugibano += ugibana_crka
             print(ugibana_crka)
             if ugibana_crka in self.beseda:
+                izpis.config(text=" Bravo, pravilno si uganil, crka {}, se res skriva v iskani besedi. ".format(ugibana_crka))
                 print(" Bravo, pravilno si uganil, crka {}, se res skriva v iskani besedi. ".format(ugibana_crka))
                 return True
             else:
                 self.stevilo_napak += 1
+                izpis.config(text=" Napačno ugibas, poskusi se enkrat! ")
                 print(" Napačno ugibas, poskusi se enkrat! ")
                 return False
 
@@ -98,6 +106,8 @@ nova_igra = Igra()
 nova_igra.pripravi_slovar()
 beseda = nova_igra.izberi_besedo()
 okno = tk.Tk()
+okno.geometry("450x150")
+okno.resizable(width=False, height=False)
 okvir = tk.Frame(okno)
 
 okno.title('Vislice')
@@ -107,21 +117,23 @@ vislice.grid(row=1, sticky="w,e,n,s")
 
 stevec=0
 seznam_crk = []
-
 for crka in beseda:
     vislice = tk.Label(okno, text='_')
     vislice.grid(row=0, column=2+stevec)
     seznam_crk.append(vislice)
     stevec += 1
     
+izpis = tk.Label(okno, width=50,  text=' ')
+izpis.grid(row=3, column=0,)
 
 vnosno_polje = tk.Entry(okno)
 vnosno_polje.grid(row=2, column=0)
 
 def vnos():
     ugibana_crka = vnosno_polje.get()
-    nova_igra.ali_je_ugib_pravilen(ugibana_crka)
-    seznam_crk[0].config(text=ugibana_crka)
+    nova_igra.ali_je_ugib_pravilen(ugibana_crka) #preveri ali je ugibana crka pravilna
+    nova_igra.porocaj()
+    vnosno_polje.delete(0) #izbriše vsebino vnosnega polja
     return ugibana_crka
     
 gumb_ugibaj = tk.Button(okno, text = 'Ugibaj!', command=vnos)
@@ -132,9 +144,6 @@ gumb_izhod.grid(row=3, column=1)
 
 
 okno.mainloop()
-i = Igra()
-i.igraj()
-
 
 
 
