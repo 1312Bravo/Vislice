@@ -27,6 +27,7 @@ class Igra():
 
 
     def izberi_besedo(self): 
+
         def potrdi_besedo():
             dolzina = zacetno_vnosno_polje.get()
             random_beseda = random.choice(self.slovar[dolzina])
@@ -53,7 +54,6 @@ class Igra():
 
     def igralno_okence(self):
        
-
         def ali_je_ugib_pravilen(ugibana_crka):
             if ugibana_crka in self.ze_ugibano: 
                 self.stevilo_napak += 1
@@ -62,7 +62,6 @@ class Igra():
                     showinfo("Rezultat", "Izgubil si, kupi si slovar!")
                     
                 stevec_napak.config(text=self.stevilo_napak) 
-                
                 izpis.config(text="To črko si enkrat že ugibal, zresni se!")
 
             else:
@@ -75,18 +74,20 @@ class Igra():
                         showinfo("Rezultat", "Bravo, zmagal si!")
 
                 else:
-                    self.stevilo_napak += 1                    
+                    self.stevilo_napak += 1
+                    
+                    if self.stevilo_napak == 10:                   
+                        showinfo("Rezultat", "Izgubil si, kupi si slovar!")
+                        
                     stevec_napak.config(text=self.stevilo_napak)
                     izpis.config(text=" Napačno ugibaš, poskusi še enkrat! ")
 
         def porocaj():
             st_element = 0  
-            for x in self.beseda:
-                 
+            for x in self.beseda: 
                 if x in self.ze_ugibano: 
                     seznam_crk[st_element].config(text=x.upper()) 
-                    st_element += 1
-                    
+                    st_element += 1                    
                 else:
                     seznam_crk[st_element].config(text="___")  
                     st_element += 1
