@@ -35,13 +35,13 @@ class Igra():
             zacetno_okno.destroy()
             self.igralno_okence()
             
-        zacetno_okno = tk.Tk() #
+        zacetno_okno = tk.Tk() 
         zacetno_okno.geometry("500x200")
         zacetno_okno.resizable(width=False, height=False)
         zacetno_okno.title('Izbira težavnosti')
 
         zacetni_okvir = tk.Frame(zacetno_okno)
-        zacetni_napis = tk.Label(zacetno_okno, text='Besedo kakšne tezavnosti boš probal uganiti? (lahko, srednje-težko, težko, zelo-težko) ')
+        zacetni_napis = tk.Label(zacetno_okno, text='Besedo kakšne tezavnosti boš probal uganiti? (lahko, srednje-težko, težko, zelo-težko)')
         zacetni_napis.place(x=25, y=20)
 
         zacetno_vnosno_polje = tk.Entry(zacetno_okno) 
@@ -96,9 +96,10 @@ class Igra():
         okno.title('Vislice, by Urh Peček')
         vislice = tk.Label(okno, text='Katera črka misliš da se skriva v besedi?') 
         vislice.place(x=50, y=10)
+        
         stevec = 0 
         seznam_crk = []
-
+        
         for crka in self.beseda: 
             crtice = tk.Label(okno, text='___') 
             crtice.place(x=50 + stevec, y=110)
