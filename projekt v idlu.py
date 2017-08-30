@@ -52,17 +52,7 @@ class Igra():
         zacetno_okno.mainloop()
 
     def igralno_okence(self):
-        def porocaj():
-            st_element = 0  
-            for x in self.beseda:
-                 
-                if x in self.ze_ugibano: 
-                    seznam_crk[st_element].config(text=x.upper()) 
-                    st_element += 1
-                    
-                else:
-                    seznam_crk[st_element].config(text="___")  
-                    st_element += 1
+       
 
         def ali_je_ugib_pravilen(ugibana_crka):
             if ugibana_crka in self.ze_ugibano: 
@@ -89,6 +79,19 @@ class Igra():
                     stevec_napak.config(text=self.stevilo_napak)
                     izpis.config(text=" Napačno ugibaš, poskusi še enkrat! ")
 
+        def porocaj():
+            st_element = 0  
+            for x in self.beseda:
+                 
+                if x in self.ze_ugibano: 
+                    seznam_crk[st_element].config(text=x.upper()) 
+                    st_element += 1
+                    
+                else:
+                    seznam_crk[st_element].config(text="___")  
+                    st_element += 1
+        
+
         okno = tk.Tk() 
         okno.geometry("500x200")
         okno.resizable(width=False, height=False)
@@ -98,24 +101,24 @@ class Igra():
         vislice.place(x=50, y=10)
         
         stevec = 0 
-        seznam_crk = []
+        seznam_crk = [] 
         
         for crka in self.beseda: 
-            crtice = tk.Label(okno, text='___') 
-            crtice.place(x=50 + stevec, y=110)
-            seznam_crk.append(crtice) 
+            crtica = tk.Label(okno, text='___') 
+            crtica.place(x=50 + stevec, y=110)
+            seznam_crk.append(crtica) 
             stevec += 30
             
         vnosno_polje = tk.Entry(okno) 
         vnosno_polje.place(x=50, y=40)
         
-        izpis = tk.Label(okno, width=50, text=' ')
+        izpis = tk.Label(okno, width=50, text=' ') 
         izpis.place(x=30, y=60)
         
         okno_napak = tk.Label(okno, text='Število napak')
         okno_napak.place(x=400, y=20)
         
-        stevec_napak = tk.Label(okno, text='0')
+        stevec_napak = tk.Label(okno, text='0') 
         stevec_napak.place(x=430, y=40)
 
         def vnos(): 
@@ -127,8 +130,10 @@ class Igra():
 
         gumb_ugibaj = tk.Button(okno, text='Ugibaj!', command=vnos)
         gumb_izhod = tk.Button(okno, text='Izhod!', command=quit)
+        
         gumb_ugibaj.place(x=430, y=100)
         gumb_izhod.place(x=430, y=150)
+        
         okno.mainloop()
 
 
